@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const Room = require('./models/Room');
 var io = require('socket.io')(server);
 const getWord = require('./api/getWord');
+require('dotenv').config();
 
 // middleWare
 app.use(express.json());
@@ -39,10 +40,11 @@ io.on('connection', (socket) => {
                 nickname,
                 isPartyLeader: true,
             }
-            room.player.push(player);
+            room.players.push(player);
             room = await room.save();
             socket.join(room);
-            io.to(name).emit('updateRoom', room);        }
+            io.to(name).emit('updateRoom', room);
+            }
         catch(err){
             console.log(err);
         }
