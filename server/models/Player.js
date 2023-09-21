@@ -16,7 +16,7 @@ const playerSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-});
+})
 
 const playermodel = mongoose.model('Player', playerSchema);
 module.exports = {playermodel, playerSchema}

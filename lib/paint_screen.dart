@@ -18,21 +18,31 @@ class _PaintScreenState extends State<PaintScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print('connect up');
     connect();
+    print('connect down');
     print(widget.data);
   }
 
   //socket io client connection
   void connect(){
-    _socket = IO.io('http://192.168.29.126.3000', <String, dynamic>{
+    _socket = IO.io('http://192.168.126.144:3000', <String, dynamic>{
       'transports': ['websocket'],
-      'autoConnect': false,
+      'autoConnect': false
     });
     _socket.connect();
+    print('ok');
+    _socket.onConnect((data) => print('Coneection in socket done'));
+    _socket.onConnectError((data) => print("connection Error $data"));
+    _socket.onDisconnect((data) => print("Socket.IO server disconnected"));
 
     if(widget.screenFrom == 'createRoom'){
       _socket.emit('create-game', widget.data);
     }
+    else {
+      _socket.emit('join-game', widget.data);
+    }
+
     // listen to socket
     _socket.onConnect((data) {
       print('connected');
@@ -44,7 +54,6 @@ class _PaintScreenState extends State<PaintScreen> {
         {
           //start the timer
         }
-         
       });
     });
   }

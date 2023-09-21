@@ -15,14 +15,15 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
   late String? _maxRoundsValue ;
   late String? _roomSizeValue  ;
 
+
   // create room function
   void createRoom(){
     if(_nameController.text.isNotEmpty && _roomNameController.text.isNotEmpty && _maxRoundsValue != null && _roomSizeValue != null){
-      Map data = {
+      Map <String,String> data = {
         "nickname": _nameController.text,
         "name": _roomNameController.text,
-        "occupancy": _maxRoundsValue,
-        "maxRounds": _roomSizeValue,
+        "occupancy": _maxRoundsValue!,
+        "maxRounds": _roomSizeValue! ,
       };
       Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaintScreen(data: data, screenFrom: 'createRoom',)));
   }
@@ -79,7 +80,7 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
                     value,style: TextStyle(color: Colors.black),
                     ))).toList(),
                 hint: Text( "Select Max Rounds " ,
-                   style: TextStyle(
+                  style: TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                   fontWeight: FontWeight.w500

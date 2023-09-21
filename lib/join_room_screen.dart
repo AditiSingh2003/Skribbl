@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skribbl/paint_screen.dart';
 import 'package:skribbl/widget/custom_text_field.dart';
 import 'create_room_screen.dart';
 
@@ -12,6 +13,20 @@ class JoinRoomScreen extends StatefulWidget {
 class _JoinRoomScreenState extends State<JoinRoomScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _roomNameController= TextEditingController();
+
+  void joinRoom()
+  {
+    if(_nameController.text.isNotEmpty && _roomNameController.text.isNotEmpty)
+    {
+      Map data ={
+        "nickName": _nameController.text,
+        "name": _roomNameController.text,
+      };
+
+      Navigator.push(context, MaterialPageRoute(builder: (context) => PaintScreen(data: data, screenFrom: 'joinRoom',)));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,14 +61,7 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
             height: MediaQuery.of(context).size.height * 0.03,
           ),
             ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CreateRoomScreen(), // Replace CreateRoomPage with the actual widget of the page you want to navigate to
-                    ),
-                  );
-                  },
+                  onPressed: joinRoom,
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
